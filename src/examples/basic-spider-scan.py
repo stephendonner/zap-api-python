@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # A basic ZAP Python API example which spiders and scans a target URL
 
+import json
 import time
 from pprint import pprint
 from zapv2 import ZAPv2
@@ -20,24 +21,29 @@ target = 'http://127.0.0.1'
 print 'Accessing target %s' % target
 zap.urlopen(target)
 # Give the sites tree a chance to get updated
-time.sleep(2)
+time.sleep(5)
 
-print 'Spidering target %s' % target
-scanid = zap.spider.scan(target)
+# print 'Spidering target %s' % target
+# scanid = zap.spider.scan(target)
 # Give the Spider a chance to start
-time.sleep(2)
-while (int(zap.spider.status(scanid)) < 100):
+# time.sleep(2)
+# while (int(zap.spider.status(scanid)) < 100):
     # Loop until the spider has finished
-    print 'Spider progress %: ' + zap.spider.status(scanid)
-    time.sleep(2)
+#    print 'Spider progress %: ' + zap.spider.status(scanid)
+#    time.sleep(2)
 
-print 'Spider completed'
+# print 'Spider completed'
 
-while (int(zap.pscan.records_to_scan) > 0):
-      print ('Records to passive scan : ' + zap.pscan.records_to_scan)
-      time.sleep(2)
+# while (int(zap.pscan.records_to_scan) > 0):
+#      print ('Records to passive scan : ' + zap.pscan.records_to_scan)
+#      time.sleep(2)
 
-print 'Passive Scan completed'
+# print 'Passive Scan completed'
+
+addons = json.dumps(zap.autoupdate.installed_addons)
+addons_json = json.loads(addons)
+addons_list = [str(addon['name']) for addon in addons_json]
+print(addons_list)
 
 print 'Active Scanning target %s' % target
 scanid = zap.ascan.scan(target)
