@@ -14,6 +14,8 @@ zap = ZAPv2(apikey=apikey)
 # Use the line below if ZAP is not listening on port 8080, for example, if listening on port 8090
 # zap = ZAPv2(apikey=apikey, proxies={'http': 'http://127.0.0.1:8090', 'https': 'http://127.0.0.1:8090'})
 
+zap.core.new_session()
+
 zap._request(zap.base + 'openapi/action/importUrl/',{'url':'http://petstore.swagger.io/v2/swagger.json'})
 target = 'http://127.0.0.1'
 
